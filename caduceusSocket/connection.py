@@ -4,7 +4,6 @@ import struct
 import threading
 import datetime
 
-import serial
 
 # TODO add heartbeat
 # TODO make session client (rpc() connect())
@@ -194,57 +193,6 @@ class Client(SocketHook):
 	def on_fail(self):
 		debug_print(0, "Connection lost")
 		self.connect()
-
-
-class SerialHook(threading.Thread):
-	def __init__(self, port, baud_rate=9600, callback=None):
-		threading.Thread.__init__(self)
-		self.ser = serial.Serial(port, baud_rate)
-		self.callback = callback
-		self.closed = threading.Event()
-
-	def run(self):
-		try:
-			while not self.closed.is_set():
-				self.loop()
-		except Exception as exc:
-			raise exc
-		finally:
-			self.__del__()
-
-	def loop(self):
-		self.ser.inWaiting()
-		data = self.ser.readline()
-		if data is not None:
-			data = data.decode()
-
-			while len(data) > 0 and data[-1] in ['\r', '\n']:
-				data = data[:-1]
-
-			if len(data) == 0:
-				debug_print(2, "Empty string")
-			else:
-				debug_print(2, "(", self.ser.port, ")\tReceived: ", data)
-				if self.callback is not None:
-					self.callback(data)
-		else:
-			debug_print(2, "\tEmpty data!")
-			self.closed.set()  # todo replace with self.close()
-
-	def send_msg(self, msg):
-		debug_print(2, "(", self.ser.port, ")\tSending: ", msg)
-		if type(msg) is str:
-			msg = bytearray(msg, 'utf-8')
-		try:
-			self.ser.write(msg)
-			self.ser.flush()
-		except Exception as exc:
-			self.__del__()
-			raise exc
-
-	def __del__(self):
-		self.ser.close()
-		debug_print(2, "Closed connection")
 
 
 if __name__ == "__main__":
