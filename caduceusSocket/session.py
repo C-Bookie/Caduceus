@@ -1,7 +1,7 @@
 import threading
 import queue
 
-import connection
+from caduceusSocket import connection
 
 
 class Node(connection.SocketHook):
@@ -44,6 +44,7 @@ class Node(connection.SocketHook):
 	# ---SERVER COMMANDS---
 	# all functions must be added to self.white_list_functions
 
+	# @connection.rpc
 	def trip(self, msg):
 		self.session.end(True)
 		raise Exception("Node tripped up: " + msg)
@@ -161,7 +162,9 @@ class SessionManager(connection.Host):
 		del self.sessions[session_alias]  # todo review
 		connection.debug_print(1, "Deleted old session: " + session_alias)
 
-
-if __name__ == "__main__":
+def run():
 	sm: SessionManager = SessionManager()
 	sm.run()
+
+if __name__ == "__main__":
+	run()

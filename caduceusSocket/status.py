@@ -1,7 +1,6 @@
-import os
 import time
 
-import connection
+from caduceusSocket import connection
 
 
 class Screen:

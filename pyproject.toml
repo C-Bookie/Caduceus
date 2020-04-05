@@ -1,0 +1,24 @@
+[tool.poetry]
+name = "caduceusSocket"
+version = "0.1.1"
+description = "A python socket manager."
+authors = ["Callum Burns-Curd <callum@fish.cat>"]
+license = "MIT"
+readme = 'README.md'
+repository = "https://github.com/C-Bookie/Caduceus"
+homepage = "https://github.com/C-Bookie/Caduceus"
+keywords = ['sosket']
+
+[tool.poetry.dependencies]
+python = "^3.7"
+serial = "^0.0.97"
+
+[tool.poetry.dev-dependencies]
+pytest = "^5.2"
+
+[tool.poetry.scripts]
+caduceus = 'caduceus:session.run'
+[build-system]
+requires = ["poetry>=0.12"]
+build-backend = "poetry.masonry.api"
+

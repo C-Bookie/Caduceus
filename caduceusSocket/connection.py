@@ -14,7 +14,8 @@ DEBUG_LEVEL = 5
 
 def debug_print(importance, *args):
 	if importance <= DEBUG_LEVEL:
-		print(datetime.datetime.now().strftime("%Y-%m-%d %H:%M"), "\t", str(threading.current_thread().getName()), ": ", *args)
+		print(datetime.datetime.now().strftime("%Y-%m-%d %H:%M"), "\t", str(threading.current_thread().getName()), ": ",
+		      *args)
 
 
 def encode(data):
@@ -22,12 +23,17 @@ def encode(data):
 		if isinstance(obj, set):
 			return list(obj)
 		return obj
-		# raise TypeError
+
+	# raise TypeError
 	return json.dumps(data, default=set_default)
 
 
 def decode(data):
 	return json.loads(data)
+
+
+# def rpc(func):
+# 	return func
 
 
 class SocketHook(threading.Thread):
@@ -42,6 +48,9 @@ class SocketHook(threading.Thread):
 		self.setName("Connection-" + self.addr + ":" + str(self.port))
 		debug_print(1, "Connection opened")
 		self.white_list_functions = []
+		# self.white_list_functions =[method_name for method_name in dir(self)
+		#                              if (rpc in getattr(self, method_name)._decorators if
+		#                                  "_decorators" in getattr(self, method_name) else False)]
 
 	def callback(self, msg):  # todo review
 		response = decode(msg)
@@ -155,7 +164,7 @@ class Host(threading.Thread):
 			conn.send_msg(msg)
 
 	def close(self, client):
-		for i in range(len(self.connections)-1, -1, -1):
+		for i in range(len(self.connections) - 1, -1, -1):
 			if self.connections[i] is client:
 				del self.connections[i]
 
