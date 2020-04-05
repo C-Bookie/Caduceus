@@ -1,6 +1,6 @@
 [tool.poetry]
-name = "caduceusSocket"
-version = "0.1.3"
+name = "caduceussocket"
+version = "0.1.4"
 description = "A python socket manager."
 authors = ["Callum Burns-Curd <callum@fish.cat>"]
 license = "MIT"

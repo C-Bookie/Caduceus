@@ -2,7 +2,7 @@ import threading
 
 import pygame
 
-from caduceusSocket import connection
+from caduceussocket import connection
 
 
 class Screen:

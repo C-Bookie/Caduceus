@@ -1,7 +1,7 @@
 import threading
 import queue
 
-from caduceusSocket import connection
+from caduceussocket import connection
 
 
 class Node(connection.SocketHook):
