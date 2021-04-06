@@ -2,7 +2,7 @@
 name = "caduceussocket"
 version = "0.1.4"
 description = "A python socket manager."
-authors = ["Callum Burns-Curd <callum@fish.cat>"]
+authors = ["Callum B-C <callum@fish.cat>"]
 license = "MIT"
 readme = 'README.md'
 repository = "https://github.com/C-Bookie/Caduceus"
